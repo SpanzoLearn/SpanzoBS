@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagpat City Services</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-image: linear-gradient(to bottom, #f7d2c4, #ff9900);
+            font-family: Arial, sans-serif;
+        }
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content {
+            background-color: #ffcc66;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .modal-header {
+            border-bottom: none;
+        }
+        .modal-body {
+            padding: 0;
+        }
+        .modal-footer {
+            border-top: none;
+        }
+        .service-button {
+            background-color: #ff9900;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .service-button:hover {
+            background-color: #ffcc66;
+        }
+        .visit-counter {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: #ffcc66;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+        .language-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #ffcc66;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+        #home-page {
+            display: none;
+        }
+        .card {
+            background-color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #ffcc66;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .navbar {
+            background-color: #ff9900;
+            padding: 10px;
+        }
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar-nav {
+            font-size: 18px;
+        }
+        #additional-terms {
+            display: none;
+        }
+        .logo {
+            font-size: 36px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .logo .bi-building {
+            font-size: 36px;
+            color: #000;
+            margin-right: 10px;
+            animation: spin 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Terms and Conditions Modal -->
+    <div class="modal" id="terms-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="logo">
+                        <i class="bi bi-building" style="font-size: 36px; color: #000; margin-right: 10px;"></i>
+                        <span>Baghpat Services App</span>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <h5>Terms and Conditions</h5>
+                    <h6>Service Limitation</h6>
+                    <p>This web app acts solely as a platform to connect users with service providers available in the Bagpat area. We do not provide any services directly.</p>
+                    <p>For more information, please click the "Read More" button below.</p>
+                    <button class="btn btn-primary" id="read-more-button">Read More</button>
+                    <div id="additional-terms">
+                        <h6>Liability Disclaimer</h6>
+                        <p>We are not responsible for any errors, delays, or issues arising from the services provided by the connected service providers. Any disputes or concerns regarding the services must be addressed directly with the service provider.</p>
+                        <h6>No Guarantee</h6>
+                        <p>While we strive to connect users with reliable service providers, we do not guarantee the availability, quality, or accuracy of the services offered.</p>
+                        <h6>User Responsibility</h6>
+                        <p>Users are responsible for verifying the service provider’s details, pricing, and quality before availing of any services.</p>
+                        <h6>Pricing Information</h6>
+                        <p>All pricing information displayed in the app is provided by the service providers and may vary. We are not liable for any discrepancies or misunderstandings regarding the charges.</p>
+                        <h6>Service Area</h6>
+                        <p>This web app is limited to connecting users with service providers operating in Bagpat. Services outside this area are not supported.</p>
+                        <h6>Indemnification</h6>
+                        <p>By using this app, you agree to indemnify and hold us harmless from any claims, damages, or liabilities arising from the use of this platform or services rendered by connected providers.</p>
+                        <h6>Amendments</h6>
+                        <p>We reserve the right to modify these Terms and Conditions at any time without prior notice. It is the user’s responsibility to review the terms regularly.</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terms-checkbox">
+                        <label class="form-check-label" for="terms-checkbox">I agree to the terms and conditions</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="ok-button" disabled>OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Electrician Modal -->
+    <div class="modal" id="electrician-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Electrician Services</h5>
+                    <p>Price per 20 minutes: ₹100</p>
+                    <p>Price per hour: ₹150</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Plumber Modal -->
+    <div class="modal" id="plumber-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Plumber Services</h5>
+                    <p>Price per 20 minutes: ₹100</p>
+                    <p>Price per hour: ₹150</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Tuition Teacher Modal -->
+    <div class="modal" id="tuition-teacher-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Tuition Teacher Services</h5>
+                    <p>Mathematics: ₹200/hour</p>
+                    <p>Science: ₹250/hour</p>
+                    <p>English: ₹150/hour</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Maggi Delivery Modal -->
+    <div class="modal" id="maggi-delivery-modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5>Maggi Delivery Services</h5>
+                    <p>Regular Maggi: ₹50</p>
+                    <p>Cheese Maggi: ₹70</p>
+                    <p>Special Masala Maggi: ₹100</p>
+                    <p>Delivery Time: 30 minutes</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Home Page -->
+    <div id="home-page">
+        <!-- Navigation Menu -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" id="home-nav" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-nav" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="about-nav" href="#">About</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <select id="language-select" class="form-select">
+                            <option value="english">English</option>
+                            <option value="hindi">हिंदी</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!-- Services Container -->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">Electrician</div>
+                        <div class="card-body">
+                            <p>Price per 20 minutes: ₹100</p>
+                            <p>Price per hour: ₹150</p>
+                            <button class="service-button" onclick="openDialer('tel:+919999999999')">Call Now</button>
+                            <button class="service-button" data-bs-toggle="modal" data-bs-target="#electrician-modal">More Info</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">Plumber</div>
+                        <div class="card-body">
+                            <p>Price per 20 minutes: ₹100</p>
+                            <p>Price per hour: ₹150</p>
+                            <button class="service-button" onclick="openDialer('tel:+919999999998')">Call Now</button>
+                            <button class="service-button" data-bs-toggle="modal" data-bs-target="#plumber-modal">More Info</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">Tuition Teacher</div>
+                        <div class="card-body">
+                            <p>Mathematics: ₹200/hour</p>
+                            <p>Science: ₹250/hour</p>
+                            <p>English: ₹150/hour</p>
+                            <button class="service-button" onclick="openDialer('tel:+919999999997')">Call Now</button>
+                            <button class="service-button" data-bs-toggle="modal" data-bs-target="#tuition-teacher-modal">More Info</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">Maggi Delivery</div>
+                        <div class="card-body">
+                            <p>Regular Maggi: ₹50</p>
+                            <p>Cheese Maggi: ₹70</p>
+                            <p>Special Masala Maggi: ₹100</p>
+                            <button class="service-button" onclick="openDialer('tel:+919999999996')">Call Now</button>
+                            <button class="service-button" data-bs-toggle="modal" data-bs-target="#maggi-delivery-modal">More Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Visit Counter -->
+        <div class="visit-counter" id="visit-counter">Visits: <span id="visit-count">0</span></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedLanguage = 'english';
+        // Store content in both English and Hindi
+        const content = {
+            english: {
+                home: 'Home',
+                contact: 'Contact',
+                about: 'About',
+                electrician: 'Electrician',
+                plumber: 'Plumber',
+                tuitionTeacher: 'Tuition Teacher',
+                maggiDelivery: 'Maggi Delivery',
+                visitCounter: 'Visits: ',
+                language: 'Language'
+            },
+            hindi: {
+                home: 'होम',
+                contact: 'संपर्क',
+                about: 'बारे में',
+                electrician: 'इलेक्ट्रिशियन',
+                plumber: 'प्लम्बर',
+                tuitionTeacher: 'ट्यूशन टीचर',
+                maggiDelivery: 'मैगी डिलीवरी',
+                visitCounter: 'बारंबारता: ',
+                language: 'भाषा'
+            }
+        };
+        // Update content based on selected language
+        function updateContent() {
+            document.getElementById('home-nav').innerHTML = content[selectedLanguage].home;
+            document.getElementById('contact-nav').innerHTML = content[selectedLanguage].contact;
+            document.getElementById('about-nav').innerHTML = content[selectedLanguage].about;
+        }
+        // Update selected language when user selects a language
+        document.getElementById('language-select').addEventListener('change', function() {
+            selectedLanguage = this.value;
+            updateContent();
+            localStorage.setItem('selectedLanguage', selectedLanguage);
+        });
+        // Load selected language from local storage
+        if (localStorage.getItem('selectedLanguage')) {
+            selectedLanguage = localStorage.getItem('selectedLanguage');
+            document.getElementById('language-select').value = selectedLanguage;
+            updateContent();
+        }
+        // Open dialer on service button click
+        function openDialer(number) {
+            window.location.href = number;
+        }
+        // Show terms and conditions modal on page load
+        const termsModal = new bootstrap.Modal(document.getElementById('terms-modal'), {
+            keyboard: false
+        });
+        termsModal.show();
+        // Enable OK button when terms checkbox is checked
+        document.getElementById('terms-checkbox').addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('ok-button').disabled = false;
+            } else {
+                document.getElementById('ok-button').disabled = true;
+            }
+        });
+        // Hide terms and conditions modal when OK button is clicked
+        document.getElementById('ok-button').addEventListener('click', function() {
+            termsModal.hide();
+            document.getElementById('home-page').style.display = 'block';
+        });
+        // Show additional terms when read more button is clicked
+        document.getElementById('read-more-button').addEventListener('click', function() {
+            document.getElementById('additional-terms').style.display = 'block';
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
