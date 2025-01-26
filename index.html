@@ -320,13 +320,45 @@
                 <div class="col-md-3 mb-4">
                     <div class="card">
                         <div class="card-header">Room Rental</div>
+                        <div class="flex items-center justify-center gap-6 mt-4">
+                            <!-- Radio Buttons -->
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="roomOption" value="looking" id="lookingRoom" class="cursor-pointer">
+                                <span>Looking for Room</span>
+                            </label>
+                            <label class="flex items-center space-x-2">
+                                <input type="radio" name="roomOption" value="giving" id="giveRoom" class="cursor-pointer">
+                                <span>Give Room on Rent</span>
+                            </label>
+                        </div>
                         <div class="card-body">
-                            
+                            <!-- Call Now Button -->
                             <button class="service-button" onclick="openDialer('tel:+919999999996')">Call Now</button>
+                
+                            <!-- More Info Button (opens modal) -->
                             <button class="service-button" data-bs-toggle="modal" data-bs-target="#room-rental-modal">More Info</button>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Modal for Room Rental Info -->
+                <div class="modal fade" id="room-rental-modal" tabindex="-1" aria-labelledby="roomRentalModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="roomRentalModalLabel">Room Rental Information</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="room-cards-container">
+                                <!-- Cards will be dynamically inserted here -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <!-- Visit Counter -->
@@ -418,6 +450,50 @@
             document.getElementById('additional-terms').style.display = 'block';
             this.style.display = 'none';
         });
+        
+         // Function to generate room cards
+    function generateRoomCards() {
+        const rooms = [
+            { name: 'Room 1', price: '₹5000', description: 'A cozy room for one person.' },
+            { name: 'Room 2', price: '₹6000', description: 'Spacious room with a balcony.' },
+            { name: 'Room 3', price: '₹7000', description: 'Room with a king-size bed.' }
+        ];
+
+        let roomCardsHtml = '';
+
+        rooms.forEach(room => {
+            roomCardsHtml += `
+                <div class="card mb-3">
+                    <div class="card-header">${room.name}</div>
+                    <div class="card-body">
+                        <h5 class="card-title">${room.price}</h5>
+                        <p class="card-text">${room.description}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        return roomCardsHtml;
+    }
+    // Event listener to open the modal when a radio button is clicked
+    document.querySelectorAll('input[name="roomOption"]').forEach((radioButton) => {
+        radioButton.addEventListener('change', () => {
+            // Check if "Looking for Room" is selected
+            if (document.getElementById('lookingRoom').checked) {
+                // Generate and inject room cards into the modal
+                const roomCardsContainer = document.getElementById('room-cards-container');
+                roomCardsContainer.innerHTML = generateRoomCards();
+            } else {
+                // Clear modal content when "Give Room on Rent" is selected
+                const roomCardsContainer = document.getElementById('room-cards-container');
+                roomCardsContainer.innerHTML = '<p>Here you can provide details for giving rooms on rent.</p>';
+            }
+
+            // Trigger the modal to open
+            var myModal = new bootstrap.Modal(document.getElementById('room-rental-modal'));
+            myModal.show();
+        });
+    });
     </script>
 </body>
 </html>
