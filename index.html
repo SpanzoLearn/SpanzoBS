@@ -124,6 +124,11 @@
                 transform: rotate(360deg);
             }
         }
+        @media only screen and (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -312,6 +317,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-header">Room Rental</div>
+                        <div class="card-body">
+                            
+                            <button class="service-button" onclick="openDialer('tel:+919999999996')">Call Now</button>
+                            <button class="service-button" data-bs-toggle="modal" data-bs-target="#room-rental-modal">More Info</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Visit Counter -->
@@ -320,6 +335,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let selectedLanguage = 'english';
+        let visitCount = localStorage.getItem('visitCount') ? parseInt(localStorage.getItem('visitCount')) : 0;
+        visitCount++;
+        localStorage.setItem('visitCount', visitCount);
+        document.getElementById('visit-count').innerHTML = visitCount;
+
         // Store content in both English and Hindi
         const content = {
             english: {
@@ -345,33 +365,39 @@
                 language: 'भाषा'
             }
         };
+
         // Update content based on selected language
         function updateContent() {
             document.getElementById('home-nav').innerHTML = content[selectedLanguage].home;
             document.getElementById('contact-nav').innerHTML = content[selectedLanguage].contact;
             document.getElementById('about-nav').innerHTML = content[selectedLanguage].about;
         }
+
         // Update selected language when user selects a language
         document.getElementById('language-select').addEventListener('change', function() {
             selectedLanguage = this.value;
             updateContent();
             localStorage.setItem('selectedLanguage', selectedLanguage);
         });
+
         // Load selected language from local storage
         if (localStorage.getItem('selectedLanguage')) {
             selectedLanguage = localStorage.getItem('selectedLanguage');
             document.getElementById('language-select').value = selectedLanguage;
             updateContent();
         }
+
         // Open dialer on service button click
         function openDialer(number) {
             window.location.href = number;
         }
+
         // Show terms and conditions modal on page load
         const termsModal = new bootstrap.Modal(document.getElementById('terms-modal'), {
             keyboard: false
         });
         termsModal.show();
+
         // Enable OK button when terms checkbox is checked
         document.getElementById('terms-checkbox').addEventListener('change', function() {
             if (this.checked) {
@@ -380,11 +406,13 @@
                 document.getElementById('ok-button').disabled = true;
             }
         });
+
         // Hide terms and conditions modal when OK button is clicked
         document.getElementById('ok-button').addEventListener('click', function() {
             termsModal.hide();
             document.getElementById('home-page').style.display = 'block';
         });
+
         // Show additional terms when read more button is clicked
         document.getElementById('read-more-button').addEventListener('click', function() {
             document.getElementById('additional-terms').style.display = 'block';
